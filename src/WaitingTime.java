@@ -13,10 +13,11 @@ public class WaitingTime {
         doctors.add(new Doctor("doctor 2",4));
         doctors.add(new Doctor("doctor 3",8));
 
-        System.out.println("Waiting Time" + getWaitingTime(0));
+        System.out.println("Waiting Time : " + getWaitingTime(3));
     }
 
 
+    // position in queue starts from 1
     private static int getWaitingTime(int positionInQueue){
         createQueues();
         loadPatients();
@@ -27,7 +28,7 @@ public class WaitingTime {
         if(queueDetails != null){
             int doctorsAverageTime = queueDetails.getDoctor().getAverageConsultationTime();
             ArrayList<Patient> patientsInQue = queueDetails.getPatientArrayList();
-            int peopleAhead = patientsInQue.size() - positionInQueue - 1;
+            int peopleAhead = patientsInQue.size() - positionInQueue-1;
            return doctorsAverageTime * peopleAhead;
         }
 
@@ -36,15 +37,14 @@ public class WaitingTime {
 
     private static QueueDetails getPatientWithPosition(int positionInQueue) {
         QueueDetails queueDetails = null;
-        if(positionInQueue <= patients.size()-1){
+        if(positionInQueue <= patients.size()){
             for (Map.Entry<Doctor, ArrayList<Patient>> set :
                     queueHashMap.entrySet()) {
-                if(positionInQueue <= set.getValue().size()-1){
-                    if(set.getValue().get(positionInQueue) ==  patients.get(positionInQueue)){
-                        Patient patient =  set.getValue().get(positionInQueue);
+                    if(set.getValue().contains(patients.get(positionInQueue))){
+                        Patient patient =  set.getValue().get(set.getValue().indexOf(patients.get(positionInQueue)));
+                        System.out.println(patient.getName());
                         queueDetails = new QueueDetails(patient,set.getValue(),set.getKey());
                     }
-                }
             }
         }
 
