@@ -26,7 +26,7 @@ public class WaitingTime {
         // check user input is a valid position
         if(positionInQueue <= patients.size()){
 
-            //this is a compilation of all required details about a queue liked to a doctor
+            //this is a compilation of all required details about a queue linked to a doctor
             QueueDetails queueDetails = getPatientWithPosition(positionInQueue);
 
             int doctorsAverageTime = queueDetails.getDoctor().getAverageConsultationTime();
@@ -49,8 +49,8 @@ public class WaitingTime {
                     queueHashMap.entrySet()) {
                     if(set.getValue().contains(patients.get(positionInQueue))){
                         int patientPosition = set.getValue().indexOf(patients.get(positionInQueue));
-                        System.out.println("--------------------");
 
+                        System.out.println("--------------------");
                         Patient patient =  set.getValue().get(patientPosition);
                         System.out.println(patient.toString());
                         queueDetails = new QueueDetails(patient,set.getValue(),set.getKey());
