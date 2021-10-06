@@ -23,8 +23,12 @@ public class WaitingTime {
         allocatePatientToDoctors();
         showQueues();
 
+        // check user input is a valid position
         if(positionInQueue <= patients.size()){
+
+            //this is a compilation of all required details about a queue liked to a doctor
             QueueDetails queueDetails = getPatientWithPosition(positionInQueue);
+
             int doctorsAverageTime = queueDetails.getDoctor().getAverageConsultationTime();
             ArrayList<Patient> patientsInQueue = queueDetails.getPatientArrayList();
 
