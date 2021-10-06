@@ -13,23 +13,28 @@ public class WaitingTime {
         doctors.add(new Doctor("doctor 2",4));
         doctors.add(new Doctor("doctor 3",8));
 
-        System.out.println("Waiting Time : " + getWaitingTime(3));
+        System.out.println("Waiting Time : " + getWaitingTime(doctors,7));
     }
 
 
     // position in queue starts from 1
-    private static int getWaitingTime(int positionInQueue){
-        createQueues();
+    private static int getWaitingTime(ArrayList<Doctor> doctors,int positionInQueue){
+        createQueues(doctors);
         loadPatients();
         allocatePatientToDoctors();
         showQueues();
         QueueDetails queueDetails = getPatientWithPosition(positionInQueue);
 
-        if(queueDetails != null){
+        if(queueDetails != null && positionInQueue){
             int doctorsAverageTime = queueDetails.getDoctor().getAverageConsultationTime();
             ArrayList<Patient> patientsInQue = queueDetails.getPatientArrayList();
-            int peopleAhead = patientsInQue.size() - positionInQueue-1;
-           return doctorsAverageTime * peopleAhead;
+            int peopleAhead = patientsInQue.size() - positionInQueue;
+
+            System.out.println("peopleAhead : " + peopleAhead);
+            System.out.println("positionInQueue : " + positionInQueue);
+            return doctorsAverageTime * peopleAhead;
+        }else {
+            System.out.println("Position not valid");
         }
 
         return 0;
@@ -64,9 +69,9 @@ public class WaitingTime {
         patients.add(new Patient("Patients 8",3));
     }
 
-    private static void createQueues(){
+    private static void createQueues(ArrayList<Doctor> doctors){
         queueHashMap = new HashMap<>();
-        for (Doctor doctor : WaitingTime.doctors) {
+        for (Doctor doctor :doctors) {
             queueHashMap.put(doctor, new ArrayList<>());
         }
     }
