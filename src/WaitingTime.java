@@ -17,20 +17,25 @@ public class WaitingTime {
     }
 
 
-    // position in queue starts from 1
     private static int getWaitingTime(ArrayList<Doctor> doctors,int positionInQueue){
         createQueues(doctors);
         loadPatients();
         allocatePatientToDoctors();
         showQueues();
 
-        QueueDetails queueDetails = getPatientWithPosition(positionInQueue);
-        int doctorsAverageTime = queueDetails.getDoctor().getAverageConsultationTime();
-        ArrayList<Patient> patientsInQueue = queueDetails.getPatientArrayList();
+        if(positionInQueue <= patients.size()){
+            QueueDetails queueDetails = getPatientWithPosition(positionInQueue);
+            int doctorsAverageTime = queueDetails.getDoctor().getAverageConsultationTime();
+            ArrayList<Patient> patientsInQueue = queueDetails.getPatientArrayList();
 
-        int peopleAhead = patientsInQueue.size() - patientsInQueue.indexOf(queueDetails.getPatient_selected());
+            int peopleAhead = patientsInQueue.size() - patientsInQueue.indexOf(queueDetails.getPatient_selected())-1;
 
-       return doctorsAverageTime * peopleAhead;
+            System.out.println("Patients ahead of "+queueDetails.getPatient_selected().getName()+" are "+peopleAhead);
+            return doctorsAverageTime * peopleAhead;
+        }
+
+        System.out.println("In valid Position");
+       return 0;
     }
 
     private static QueueDetails getPatientWithPosition(int positionInQueue) {
@@ -39,7 +44,11 @@ public class WaitingTime {
             for (Map.Entry<Doctor, ArrayList<Patient>> set :
                     queueHashMap.entrySet()) {
                     if(set.getValue().contains(patients.get(positionInQueue))){
-                        Patient patient =  set.getValue().get(set.getValue().indexOf(patients.get(positionInQueue)));
+                        int patientPosition = set.getValue().indexOf(patients.get(positionInQueue));
+                        System.out.println("--------------------");
+
+                        Patient patient =  set.getValue().get(patientPosition);
+                        System.out.println(patient.toString());
                         queueDetails = new QueueDetails(patient,set.getValue(),set.getKey());
                     }
             }
