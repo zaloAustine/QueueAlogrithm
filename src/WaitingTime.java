@@ -104,6 +104,7 @@ public class WaitingTime {
         }
     }
 
+    // this method adds patient to an array linked to a doctor (Hashmap)
     private static void addPatientToQueue(Doctor doc,int position){
         ArrayList<Patient> arrayList = queueHashMap.get(doc);
         arrayList.add(patients.get(position));
